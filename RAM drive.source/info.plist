@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string></string>
+	<key>category</key>
+	<string>Tools</string>
+	<key>connections</key>
+	<dict>
+		<key>3E86F4FB-6BA6-4866-B5E8-2BB58EE9C6CC</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>D61A6993-6D0E-4785-9B18-DD5F3C82055A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+		<key>D866DA1D-5E55-49F2-AF16-AB9C87C22355</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>3E86F4FB-6BA6-4866-B5E8-2BB58EE9C6CC</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Pavel Miroshnichenko</string>
+	<key>description</key>
+	<string>Script uses a part of your RAM to create a new volume shown as an ordinary drive that can be mounted and used independently in your Finder</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>RAM drive</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>Your RAM drive has been successfully created!</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>D61A6993-6D0E-4785-9B18-DD5F3C82055A</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>keyword</key>
+				<string>ram</string>
+				<key>subtext</key>
+				<string>Input: 1048576, 100m, 1G, etc..</string>
+				<key>text</key>
+				<string>Make RAM drive</string>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>D866DA1D-5E55-49F2-AF16-AB9C87C22355</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>case `echo {query}|sed 's/[0-9]*//g'` in
+  "") 
+    ramDrive=$(hdid -nomount ram://`echo $(({query}))`)
+  ;;
+  m|M|mb|Mb|MB|mB)
+    valueToConvert=`echo {query}|sed 's/[^0-9]*//g'`
+    ramDrive=$(hdid -nomount ram://`echo $((${valueToConvert}*2048))`)
+  ;;
+  g|G|gb|Gb|GB|gB)
+    valueToConvert=`echo {query}|sed 's/[^0-9]*//g'`
+    ramDrive=$(hdid -nomount ram://`echo $((${valueToConvert}*1024 *2048))`)
+  ;;
+esac
+
+#copy to clipboard
+echo "${ramDrive}"|tr -d '\n'|tr -d " "|pbcopy
+
+echo "${ramDrive}"|tr -d '\n'|tr -d " "</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>3E86F4FB-6BA6-4866-B5E8-2BB58EE9C6CC</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string></string>
+	<key>uidata</key>
+	<dict>
+		<key>3E86F4FB-6BA6-4866-B5E8-2BB58EE9C6CC</key>
+		<dict>
+			<key>ypos</key>
+			<real>70</real>
+		</dict>
+		<key>D61A6993-6D0E-4785-9B18-DD5F3C82055A</key>
+		<dict>
+			<key>ypos</key>
+			<real>70</real>
+		</dict>
+		<key>D866DA1D-5E55-49F2-AF16-AB9C87C22355</key>
+		<dict>
+			<key>ypos</key>
+			<real>70</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>https://github.com/facetheheat</string>
+</dict>
+</plist>
