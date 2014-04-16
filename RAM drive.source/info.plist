@@ -57,7 +57,7 @@
 				<key>text</key>
 				<string>{query}</string>
 				<key>title</key>
-				<string>Your RAM drive has been successfully created!</string>
+				<string>RAM drive has been successfully created</string>
 			</dict>
 			<key>type</key>
 			<string>alfred.workflow.output.notification</string>
@@ -93,17 +93,17 @@
 				<key>escaping</key>
 				<integer>127</integer>
 				<key>script</key>
-				<string>case `echo {query}|sed 's/[0-9]*//g'` in
+				<string>case `echo {query}|sed 's/[0-9.,]*//g'|tr -d " "` in
   "") 
     ramDrive=$(hdid -nomount ram://`echo $(({query}))`)
   ;;
   m|M|mb|Mb|MB|mB)
-    valueToConvert=`echo {query}|sed 's/[^0-9]*//g'`
-    ramDrive=$(hdid -nomount ram://`echo $((${valueToConvert}*2048))`)
+    valueToConvert=`echo {query}|sed 's/[^0-9,.]*//g'|sed 's/,/./g'|tr -d " "`
+    ramDrive=$(hdid -nomount ram://`echo "${valueToConvert}*2048" |bc -l`)
   ;;
   g|G|gb|Gb|GB|gB)
-    valueToConvert=`echo {query}|sed 's/[^0-9]*//g'`
-    ramDrive=$(hdid -nomount ram://`echo $((${valueToConvert}*1024 *2048))`)
+    valueToConvert=`echo {query}|sed 's/[^0-9,.]*//g'|sed 's/,/./g'|tr -d " "`
+    ramDrive=$(hdid -nomount ram://`echo "${valueToConvert}*1024*2048" |bc -l`)
   ;;
 esac
 
@@ -123,7 +123,7 @@ echo "${ramDrive}"|tr -d '\n'|tr -d " "</string>
 		</dict>
 	</array>
 	<key>readme</key>
-	<string></string>
+	<string>https://github.com/facetheheat</string>
 	<key>uidata</key>
 	<dict>
 		<key>3E86F4FB-6BA6-4866-B5E8-2BB58EE9C6CC</key>
