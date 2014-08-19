@@ -8,7 +8,7 @@
 	<string>Tools</string>
 	<key>connections</key>
 	<dict>
-		<key>3E86F4FB-6BA6-4866-B5E8-2BB58EE9C6CC</key>
+		<key>CF3EB5CE-3F95-4BC8-BE0D-99D918E0FAA6</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -19,11 +19,11 @@
 				<string></string>
 			</dict>
 		</array>
-		<key>D866DA1D-5E55-49F2-AF16-AB9C87C22355</key>
+		<key>F0E98578-FBC2-4BD0-9A6B-27DBACFA3F22</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
-				<string>3E86F4FB-6BA6-4866-B5E8-2BB58EE9C6CC</string>
+				<string>CF3EB5CE-3F95-4BC8-BE0D-99D918E0FAA6</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -44,10 +44,59 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>volSize=$(echo {query} |awk '{print $1}')
+fsType=$(echo {query} |awk '{print $2,$3,$4,$5}')
+/usr/bin/python createVolume.py --volumeSize "${volSize}" --filesystemType "${fsType}"</string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>CF3EB5CE-3F95-4BC8-BE0D-99D918E0FAA6</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>0</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>ram</string>
+				<key>runningsubtext</key>
+				<string>Loading...</string>
+				<key>script</key>
+				<string>python listFS.py {query}
+</string>
+				<key>subtext</key>
+				<string>Input: 1048576, 100m, 1G, etc..</string>
+				<key>title</key>
+				<string>Make RAM drive</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
 				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>F0E98578-FBC2-4BD0-9A6B-27DBACFA3F22</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<true/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
 				<key>output</key>
 				<integer>0</integer>
 				<key>removeextension</key>
@@ -55,7 +104,7 @@
 				<key>sticky</key>
 				<false/>
 				<key>text</key>
-				<string>{query}</string>
+				<string>/Volumes/{query}</string>
 				<key>title</key>
 				<string>RAM drive has been successfully created</string>
 			</dict>
@@ -66,80 +115,25 @@
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>argumenttype</key>
-				<integer>0</integer>
-				<key>keyword</key>
-				<string>ram</string>
-				<key>subtext</key>
-				<string>Input: 1048576, 100m, 1G, etc..</string>
-				<key>text</key>
-				<string>Make RAM drive</string>
-				<key>withspace</key>
-				<true/>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.input.keyword</string>
-			<key>uid</key>
-			<string>D866DA1D-5E55-49F2-AF16-AB9C87C22355</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>escaping</key>
-				<integer>127</integer>
-				<key>script</key>
-				<string>case `echo {query}|sed 's/[0-9.,]*//g'|tr -d " "` in
-  "") 
-    ramDrive=$(hdid -nomount ram://`echo $(({query}))`)
-  ;;
-  m|M|mb|Mb|MB|mB)
-    valueToConvert=`echo {query}|sed 's/[^0-9,.]*//g'|sed 's/,/./g'|tr -d " "`
-    ramDrive=$(hdid -nomount ram://`echo "${valueToConvert}*2048" |bc -l`)
-  ;;
-  g|G|gb|Gb|GB|gB)
-    valueToConvert=`echo {query}|sed 's/[^0-9,.]*//g'|sed 's/,/./g'|tr -d " "`
-    ramDrive=$(hdid -nomount ram://`echo "${valueToConvert}*1024*2048" |bc -l`)
-  ;;
-esac
-
-#copy to clipboard
-echo "${ramDrive}"|tr -d '\n'|tr -d " "|pbcopy
-
-echo "${ramDrive}"|tr -d '\n'|tr -d " "</string>
-				<key>type</key>
-				<integer>0</integer>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.action.script</string>
-			<key>uid</key>
-			<string>3E86F4FB-6BA6-4866-B5E8-2BB58EE9C6CC</string>
-			<key>version</key>
-			<integer>0</integer>
-		</dict>
 	</array>
 	<key>readme</key>
 	<string>https://github.com/facetheheat</string>
 	<key>uidata</key>
 	<dict>
-		<key>3E86F4FB-6BA6-4866-B5E8-2BB58EE9C6CC</key>
+		<key>CF3EB5CE-3F95-4BC8-BE0D-99D918E0FAA6</key>
 		<dict>
 			<key>ypos</key>
-			<real>70</real>
+			<real>80</real>
 		</dict>
 		<key>D61A6993-6D0E-4785-9B18-DD5F3C82055A</key>
 		<dict>
 			<key>ypos</key>
-			<real>70</real>
+			<real>80</real>
 		</dict>
-		<key>D866DA1D-5E55-49F2-AF16-AB9C87C22355</key>
+		<key>F0E98578-FBC2-4BD0-9A6B-27DBACFA3F22</key>
 		<dict>
 			<key>ypos</key>
-			<real>70</real>
+			<real>80</real>
 		</dict>
 	</dict>
 	<key>webaddress</key>
