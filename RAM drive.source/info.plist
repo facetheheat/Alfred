@@ -44,19 +44,25 @@
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>escaping</key>
-				<integer>127</integer>
-				<key>script</key>
-				<string>volSize=$(echo {query} |awk '{print $1}')
-fsType=$(echo {query} |awk '{print $2,$3,$4,$5}')
-/usr/bin/python createVolume.py --volumeSize "${volSize}" --filesystemType "${fsType}"</string>
-				<key>type</key>
+				<key>lastpathcomponent</key>
+				<true/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
 				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>/Volumes/{query}</string>
+				<key>title</key>
+				<string>RAM drive has been created</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.output.notification</string>
 			<key>uid</key>
-			<string>CF3EB5CE-3F95-4BC8-BE0D-99D918E0FAA6</string>
+			<string>D61A6993-6D0E-4785-9B18-DD5F3C82055A</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
@@ -75,9 +81,9 @@ fsType=$(echo {query} |awk '{print $2,$3,$4,$5}')
 				<string>python listFS.py {query}
 </string>
 				<key>subtext</key>
-				<string>Input: 1048576, 100m, 1G, etc..</string>
+				<string>Input: 1048576, 512m, 4G, etc..</string>
 				<key>title</key>
-				<string>Make RAM drive</string>
+				<string>Create a RAM Drive</string>
 				<key>type</key>
 				<integer>0</integer>
 				<key>withspace</key>
@@ -93,25 +99,19 @@ fsType=$(echo {query} |awk '{print $2,$3,$4,$5}')
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>lastpathcomponent</key>
-				<true/>
-				<key>onlyshowifquerypopulated</key>
-				<false/>
-				<key>output</key>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>script</key>
+				<string>volSize=$(echo {query} |awk '{print $1}')
+fsType=$(echo {query} |awk '{print $2,$3,$4,$5}')
+/usr/bin/python createVolume.py --volumeSize "${volSize}" --filesystemType "${fsType}"</string>
+				<key>type</key>
 				<integer>0</integer>
-				<key>removeextension</key>
-				<false/>
-				<key>sticky</key>
-				<false/>
-				<key>text</key>
-				<string>/Volumes/{query}</string>
-				<key>title</key>
-				<string>RAM drive has been successfully created</string>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>D61A6993-6D0E-4785-9B18-DD5F3C82055A</string>
+			<string>CF3EB5CE-3F95-4BC8-BE0D-99D918E0FAA6</string>
 			<key>version</key>
 			<integer>0</integer>
 		</dict>
